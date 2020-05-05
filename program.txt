@@ -1,0 +1,10 @@
+int x ;
+x = x ;
+
+int _12 = true;
+
+for(int i = x, i <= q; i++){
+    x += "132456";
+    
+}
+    x++;
