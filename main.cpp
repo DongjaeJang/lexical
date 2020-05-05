@@ -2,7 +2,7 @@
 
 int main()
 {
-    lexicalAnalyze("program.txt");
+    lexicalAnalyzer("program.txt");
 
     return 0;
 }

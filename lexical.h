@@ -38,5 +38,5 @@ bool isWhitespace(const string& str);
 // 출력
 void tokenRole(const vector<string>& tokens);
 // 시작
-void lexicalAnalyze(const string& nameOfFile);
+void lexicalAnalyzer(const string& nameOfFile);
 

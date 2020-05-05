@@ -12,7 +12,39 @@ bool isType(const string& str)
 }
 
 // INTEGER
-bool isInteger(const string& str);
+bool isInteger(const string& str)
+{
+    if (str.size() == 1)
+    {
+        if (isdigit(str[0]))
+            return true;
+        else
+            return false;
+    }
+    else
+    {
+        if (str[0] == '0')
+            return false;
+        else if (str[0] == '-')
+        {
+            for (int i = 1; i < str.size(); i++)
+            {
+                if (!isdigit(str[i]))
+                    return false;
+            }
+            return true;
+        }
+        else
+        {
+            for (int i = 0; i < str.size(); i++)
+            {
+                if (!isdigit(str[i]))
+                    return false;
+            }
+            return true;
+        }
+    }
+}
 
 // STRING
 bool isString(const string& str)
@@ -27,21 +59,77 @@ bool isBoolstring(const string& str)
 }
 
 // FLOAT
-bool isFloat(const string& str);
+bool isFloat(const string& str)
+{
+    int dot_count = 0;
+    int dot_index = 0;
+    if (str[0] == '-')
+    {
+        if (str[1] == '.' || str[str.size() - 1] == '.')
+            return false;
+        else
+        {
+            for (int i = 1; i < str.size(); i++)
+            {
+                if (str[i] != '.' && !isdigit(str[i]))
+                    return false;
+
+                if (str[i] == '.')
+                {
+                    dot_count++;
+                    dot_index = i;
+                }
+                if (i - dot_index == 7)
+                    return false;
+            }
+        }
+        if (dot_count != 1) return false;
+        else return true;
+    }
+    else if (isdigit(str[0]))
+    {
+        if (str[str.size() - 1] == '.')
+            return false;
+        else
+        {
+            for (int i = 1; i < str.size(); i++)
+            {
+                if (str[i] != '.' && !isdigit(str[i]))
+                    return false;
+
+                if (str[i] == '.')
+                {
+                    dot_count++;
+                    dot_index = i;
+                }
+                if (i - dot_index == 7)
+                    return false;
+            }
+        }
+        if (dot_count != 1) return false;
+        else return true;
+    }
+    else return false;
+}
 
 // ID
 bool isID(const string& str)
 {
     if (isdigit(str[0]))
         return false;
-    int counter = 0;
-    if (str[0] == '_')
-        counter++;
+    else if (isalpha(str[0]) || str[0] == '_')
+    {
+        for (int i = 1; i < str.size(); i++)
+        {
+            if (!isdigit(str[i]) && !isalpha(str[i]) && !str[i] == '_')
+                return false;
+        }
 
-    for (; counter < str.size(); counter++)
-        if (!(isalnum(str[counter])))
-            return false;
-    return true;
+        return true;
+    }
+    else 
+        return false;
+
 }
 
 
@@ -120,34 +208,34 @@ bool isWhitespace(const string& str)
 string tokenRole(const string& token)
 {
     if (isType(token))
-        return "( type => " + token + " )";
+        return "( Type : " + token + " )";
     else if (isKeyword(token))
-        return "( keyword => " + token + " )";
+        return "( Keyword : " + token + " )";
     else if (isBitwise(token))
-        return "( bitwise => " + token + " )";
+        return "( Bitwise : " + token + " )";
     else if (isArithmetic(token))
-        return "( arithmetic => " + token + " )";
+        return "( Arithmetic : " + token + " )";
     else if (isComparison(token))
-        return "( comparison => " + token + " )";
+        return "( Comparison : " + token + " )";
     else if (isAssignment(token))
-        return "( assignment => " + token + " )";
+        return "( Assignment : " + token + " )";
     else if (isSeparator(token))
-        return "( separator => " + token + " )";
-    //else if (isFloat(token))
-    //    cout << "(float, " << token << ")" << endl;
-    //else if (isInteger(token))
-    //    cout << "(integer, " << token << ")" << endl;
+        return "( Separator : " + token + " )";
+    else if (isFloat(token))
+        return "( Float : " + token + " )";
+    else if (isInteger(token))
+        return "( Integer : " + token + " )";
     else if (isBoolstring(token))
-        return "( boolstring => " + token + " )";
+        return "( Boolstring : " + token + " )";
     else if (isString(token))
-        return "( string => " + token + " )";
+        return "( String : " + token + " )";
     else if (isID(token))
-        return "( identifier => " + token + " )";
+        return "( Identifier : " + token + " )";
     else
-        throw runtime_error(token);
+        return "( !!!!!Error!!!!! Cannot read token : " + token + " )";
 }
 
-void lexicalAnalyze(const string& inputFile)
+void lexicalAnalyzer(const string& inputFile)
 {
     char ch;
     string buffer;
