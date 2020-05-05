@@ -59,7 +59,7 @@ bool isKeyword(const string& str)
 // ARITHMETIC
 bool isArithmetic(const string& str)
 {
-    const vector<string> arithmetics{ "*=", "+=", "/=", "++", "--", "*", "+", "-", "/", "-=" };
+    const vector<string> arithmetics{ "*=", "/=", "++", "+=", "--", "*", "+", "-", "/", "-=" };
     for (const auto& arithmetic : arithmetics)
         if (arithmetic == str)
             return true;
@@ -154,7 +154,7 @@ void lexicalAnalyze(const string& inputFile)
     ifstream input(inputFile, fstream::in);
     ofstream output(inputFile + ".out.txt");
     
-    output << "------------------------" << endl;
+    output << "--------------------------" << endl;
     if (!input.is_open())
     {
         cout << "error while opening the file\n";
@@ -186,7 +186,7 @@ void lexicalAnalyze(const string& inputFile)
             if (!buffer.empty())
             {
                 output << tokenRole(buffer) << endl;
-                output << "------------------------" << endl;
+                output << "--------------------------" << endl;
                 buffer = "";
             }
             continue;
@@ -197,7 +197,7 @@ void lexicalAnalyze(const string& inputFile)
             if (!buffer.empty() && !isArithmetic(buffer))
             {
                 output << tokenRole(buffer) << endl;
-                output << "------------------------" << endl;
+                output << "--------------------------" << endl;
                 buffer = "";
             }
         }
@@ -207,17 +207,7 @@ void lexicalAnalyze(const string& inputFile)
             if (!buffer.empty() && !isBitwise(buffer))
             {
                 output << tokenRole(buffer) << endl;
-                output << "------------------------" << endl;
-                buffer = "";
-            }
-        }
-
-        if (isAssignment(string(1, ch)))
-        {
-            if (!buffer.empty() && !isAssignment(buffer))
-            {
-                output << tokenRole(buffer) << endl;
-                output << "------------------------" << endl;
+                output << "--------------------------" << endl;
                 buffer = "";
             }
         }
@@ -227,7 +217,7 @@ void lexicalAnalyze(const string& inputFile)
             if (!buffer.empty() && !isComparison(buffer))
             {
                 output << tokenRole(buffer) << endl;
-                output << "------------------------" << endl;
+                output << "--------------------------" << endl;
                 buffer = "";
             }
         }
@@ -237,13 +227,13 @@ void lexicalAnalyze(const string& inputFile)
             if (!buffer.empty())
             {
                 output << tokenRole(buffer) << endl;
-                output << "------------------------" << endl;
+                output << "--------------------------" << endl;
                 buffer = "";
             }
             if (isSeparator(string(1, ch)))
             {
                 output << tokenRole(string(1, ch)) << endl;
-                output << "------------------------" << endl;
+                output << "--------------------------" << endl;
                 continue;
             }
         }
