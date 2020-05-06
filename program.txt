@@ -1,7 +1,13 @@
 int main() {
 
 	int oijo9 = 10;
-	char k = "Hello World";
+	char k = "Hello World   !!!";
+
+	char q = 'a';
+	
+	a = 3 + (-123);
+
+	char a1 = "ddd
 
 	for (int i = 0; i < 10; i++)
 	{

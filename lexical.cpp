@@ -4,7 +4,7 @@
 // TYPE
 bool isType(const string& str)
 {
-    const vector<string> types{ "int", "float", "string", "bool" };
+    const vector<string> types{ "int", "float", "char", "bool" };
     for (const auto& type : types)
         if (type == str)
             return true;
@@ -49,7 +49,18 @@ bool isInteger(const string& str)
 // STRING
 bool isString(const string& str)
 {
-    return str[0] == '"' && str[str.size() - 1] == '"';
+    return (str[0] == '"' && str[str.size() - 1] == '"');
+}
+
+// CHARACTER
+bool isCharacter(const string& str)
+{
+    if (str.size() == 3)
+    {
+        if (str[0] == '\'' && str[2] == '\'')
+            return true;
+    }
+    return false;
 }
 
 // BOOL STRING
@@ -234,6 +245,8 @@ string tokenRole(const string& token)
         return "( String : \'" + token + "\' )";
     else if (isID(token))
         return "( Identifier : \'" + token + "\' )";
+    else if (isCharacter(token))
+        return "( Character : \'" + token + "\' )";
     else
         return "( !!!!!Error!!!!! Cannot read token : \'" + token + "\' )";
 }
@@ -252,17 +265,37 @@ void lexicalAnalyzer(const string& inputFile)
         exit(0);
     }
 
+    int startString = 0;
     while (input >> noskipws >> ch)
     {
         if (isWhitespace(string(1, ch)))
         {
             if (!buffer.empty())
             {
-                output << tokenRole(buffer) << endl;
-                output << "--------------------------" << endl;
-                buffer = "";
+                if (ch == '"' && startString < 2)
+                {
+                    startString += 1;
+                    buffer += ch;
+
+                    if (startString == 2)
+                    {
+                        output << tokenRole(buffer) << endl;
+                        output << "--------------------------" << endl;
+                        startString = 0;
+                        buffer = "";
+                    }
+
+                    continue;
+                }
+                else
+                {
+                    output << tokenRole(buffer) << endl;
+                    output << "--------------------------" << endl;
+                    buffer = "";
+                }
             }
             continue;
+            
         }
 
         if (isArithmetic(string(1, ch)))
