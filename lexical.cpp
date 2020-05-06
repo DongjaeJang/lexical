@@ -150,7 +150,8 @@ bool isID(const string& str)
 // KEYWORD
 bool isKeyword(const string& str)
 {
-    const vector<string> keywords{ "if", "else", "while", "for", "return" };
+    const vector<string> keywords{ "if", "else", "while", "for", "return", "main", "printf",
+        "scanf" };
     for (const auto& keyword : keywords)
         if (keyword == str)
             return true;
@@ -268,34 +269,32 @@ void lexicalAnalyzer(const string& inputFile)
     int startString = 0;
     while (input >> noskipws >> ch)
     {
+        if (ch == '"') startString += 1;
+
+        if (startString == 1) {
+            buffer += ch;
+            continue;
+        }
+
+        else if (startString == 2) {
+            buffer += ch;
+            output << tokenRole(buffer) << endl;
+            output << "--------------------------" << endl;
+            startString = 0;
+            buffer = "";
+            continue;
+        }
+
         if (isWhitespace(string(1, ch)))
         {
             if (!buffer.empty())
             {
-                if (ch == '"' && startString < 2)
-                {
-                    startString += 1;
-                    buffer += ch;
-
-                    if (startString == 2)
-                    {
-                        output << tokenRole(buffer) << endl;
-                        output << "--------------------------" << endl;
-                        startString = 0;
-                        buffer = "";
-                    }
-
-                    continue;
-                }
-                else
-                {
-                    output << tokenRole(buffer) << endl;
-                    output << "--------------------------" << endl;
-                    buffer = "";
-                }
+                output << tokenRole(buffer) << endl;
+                output << "--------------------------" << endl;
+                buffer = "";
             }
             continue;
-            
+
         }
 
         if (isArithmetic(string(1, ch)))

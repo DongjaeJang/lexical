@@ -14,6 +14,8 @@ bool isType(const string& str);
 bool isInteger(const string& str);
 // STRING
 bool isString(const string& str);
+// CHARACTER
+bool isCharacter(const string& str);
 // BOOLSTRING
 bool isBoolstring(const string& str);
 // FLOAT
