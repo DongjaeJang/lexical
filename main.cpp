@@ -13,7 +13,7 @@ int main()
         cin >> a >> b;
     } while (a.compare("lexical_analyzer") != 0);
 
-    lexicalAnalyzer(c);
+    lexicalAnalyzer(b);
 
     return 0;
 }

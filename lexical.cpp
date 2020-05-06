@@ -228,6 +228,8 @@ string tokenRole(const string& token)
         return "( Keyword : \'" + token + "\' )";
     else if (isBitwise(token))
         return "( Bitwise : \'" + token + "\' )";
+    else if (isInteger(token))
+        return "( Integer : \'" + token + "\' )";
     else if (isArithmetic(token))
         return "( Arithmetic : \'" + token + "\' )";
     else if (isComparison(token))
@@ -238,8 +240,6 @@ string tokenRole(const string& token)
         return "( Separator : \'" + token + "\' )";
     else if (isFloat(token))
         return "( Float : \'" + token + "\' )";
-    else if (isInteger(token))
-        return "( Integer : \'" + token + "\' )";
     else if (isBoolstring(token))
         return "( Boolstring : \'" + token + "\' )";
     else if (isString(token))
@@ -266,6 +266,7 @@ void lexicalAnalyzer(const string& inputFile)
         exit(0);
     }
 
+    // string 을 인식하기 위한 변수
     int startString = 0;
     while (input >> noskipws >> ch)
     {
