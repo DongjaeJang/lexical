@@ -1,6 +1,6 @@
 int main() {
 
-	int x = 1;
+	int oijo9 = 10;
 	char k = "Hello World";
 
 	for (int i = 0; i < 10; i++)

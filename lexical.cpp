@@ -125,15 +125,14 @@ bool isID(const string& str)
     {
         for (int i = 1; i < str.size(); i++)
         {
-            if (!isdigit(str[i]) && !isalpha(str[i]) && !str[i] == '_')
+            if (!(isdigit(str[i]) || isalpha(str[i]) || str[i] == '_'))
                 return false;
         }
-
-        return true;
     }
     else 
         return false;
 
+    return true;
 }
 
 
