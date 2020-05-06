@@ -1,1 +1,12 @@
-int a12_! != 0.784891;
+int main() {
+
+	int x = 1;
+	char k = "Hello World";
+
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%s", k);	
+	}
+	float a = 00.111;
+	return 0;
+}

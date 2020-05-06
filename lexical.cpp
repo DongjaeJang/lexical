@@ -65,6 +65,8 @@ bool isFloat(const string& str)
     int dot_index = 0;
     if (str[0] == '-')
     {
+        if (str[1] == '0' && isdigit(str[2]))
+            return false;
         if (str[1] == '.' || str[str.size() - 1] == '.')
             return false;
         else
@@ -88,6 +90,8 @@ bool isFloat(const string& str)
     }
     else if (isdigit(str[0]))
     {
+        if (str[0] == '0' && isdigit(str[1]))
+            return false;
         if (str[str.size() - 1] == '.')
             return false;
         else
@@ -208,31 +212,31 @@ bool isWhitespace(const string& str)
 string tokenRole(const string& token)
 {
     if (isType(token))
-        return "( Type : " + token + " )";
+        return "( Type : \'" + token + "\' )";
     else if (isKeyword(token))
-        return "( Keyword : " + token + " )";
+        return "( Keyword : \'" + token + "\' )";
     else if (isBitwise(token))
-        return "( Bitwise : " + token + " )";
+        return "( Bitwise : \'" + token + "\' )";
     else if (isArithmetic(token))
-        return "( Arithmetic : " + token + " )";
+        return "( Arithmetic : \'" + token + "\' )";
     else if (isComparison(token))
-        return "( Comparison : " + token + " )";
+        return "( Comparison : \'" + token + "\' )";
     else if (isAssignment(token))
-        return "( Assignment : " + token + " )";
+        return "( Assignment : \'" + token + "\' )";
     else if (isSeparator(token))
-        return "( Separator : " + token + " )";
+        return "( Separator : \'" + token + "\' )";
     else if (isFloat(token))
-        return "( Float : " + token + " )";
+        return "( Float : \'" + token + "\' )";
     else if (isInteger(token))
-        return "( Integer : " + token + " )";
+        return "( Integer : \'" + token + "\' )";
     else if (isBoolstring(token))
-        return "( Boolstring : " + token + " )";
+        return "( Boolstring : \'" + token + "\' )";
     else if (isString(token))
-        return "( String : " + token + " )";
+        return "( String : \'" + token + "\' )";
     else if (isID(token))
-        return "( Identifier : " + token + " )";
+        return "( Identifier : \'" + token + "\' )";
     else
-        return "( !!!!!Error!!!!! Cannot read token : " + token + " )";
+        return "( !!!!!Error!!!!! Cannot read token : \'" + token + "\' )";
 }
 
 void lexicalAnalyzer(const string& inputFile)
@@ -249,26 +253,8 @@ void lexicalAnalyzer(const string& inputFile)
         exit(0);
     }
 
-    bool miltiCm = false, singleCm = false;
     while (input >> noskipws >> ch)
     {
-        if (singleCm || miltiCm)
-        {
-            if (singleCm && ch == '\n')
-                singleCm = false;
-
-            if (miltiCm && ch == '*')
-            {
-                input >> ch;
-                if (ch == EOF)
-                    break;
-
-                if (ch == '/')
-                    miltiCm = false;
-            }
-            continue;
-        }
-
         if (isWhitespace(string(1, ch)))
         {
             if (!buffer.empty())
