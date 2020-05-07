@@ -220,6 +220,7 @@ bool isWhitespace(const string& str)
     return str == " " || str == "\n" || str == "\t";
 }
 
+// 토큰을 입력받고 토큰밸류와 내용을 반환해줍니다.
 string tokenRole(const string& token)
 {
     if (isType(token))
@@ -252,6 +253,7 @@ string tokenRole(const string& token)
         return "( !!!!!Error!!!!! Cannot read token : \'" + token + "\' )";
 }
 
+// 파일명을 입력받고 '파일명.out.txt'을 생성하고 토큰들을 저장합니다.
 void lexicalAnalyzer(const string& inputFile)
 {
     char ch;
@@ -270,13 +272,16 @@ void lexicalAnalyzer(const string& inputFile)
     int startString = 0;
     while (input >> noskipws >> ch)
     {
+        // " 을 받으면 string이 시작하는 것이므로 변수에 1을 더해줍니다.
         if (ch == '"') startString += 1;
 
+        // 첫번째 '"'가 나오면 띄어쓰기를 포함하여 buffer에 저장합니다.
         if (startString == 1) {
             buffer += ch;
             continue;
         }
 
+        // 두번째 '"'가 나오면 그동안 buffer에 저장된 값을 String으로 출력합니다.
         else if (startString == 2) {
             buffer += ch;
             output << tokenRole(buffer) << endl;
@@ -286,6 +291,7 @@ void lexicalAnalyzer(const string& inputFile)
             continue;
         }
 
+        // Whitespace를 만나면 토큰을 나누어줍니다.
         if (isWhitespace(string(1, ch)))
         {
             if (!buffer.empty())
@@ -298,6 +304,7 @@ void lexicalAnalyzer(const string& inputFile)
 
         }
 
+        // Arithmetic를 만나면 토큰을 나누어줍니다.
         if (isArithmetic(string(1, ch)))
         {
             if (!buffer.empty() && !isArithmetic(buffer))
@@ -308,6 +315,7 @@ void lexicalAnalyzer(const string& inputFile)
             }
         }
 
+        // Bitwise를 만나면 토큰을 나누어줍니다.
         if (isBitwise(string(1, ch)))
         {
             if (!buffer.empty() && !isBitwise(buffer))
@@ -318,6 +326,7 @@ void lexicalAnalyzer(const string& inputFile)
             }
         }
 
+        // Comparison를 만나면 토큰을 나누어줍니다.
         if (isComparison(string(1, ch)))
         {
             if (!buffer.empty() && !isComparison(buffer))
@@ -328,6 +337,7 @@ void lexicalAnalyzer(const string& inputFile)
             }
         }
 
+        // Separator를 만나면 토큰을 나누어줍니다. Separator도 하나의 토큰으로서 같이 출력해줍니다.
         if (isSeparator(string(1, ch)))
         {
             if (!buffer.empty())

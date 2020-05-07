@@ -1,21 +1,11 @@
-int main() {
-	int b = 3 - 2;
-	int oijo9 = 10;
-	char k = "Hello World (())  !!!";
+int k1;
 
-	char q = 'a';
-	
-	a = 3 + (-123);
+char _k1;
 
-	if (a < 5)
-		a = 1;
+char 0k2;
 
-	char a1 = "ddd";
+float k3!!$;
 
-	for (int i = 0; i < 10; i++)
-	{
-		printf("%s", k);	
-	}
-	float a = 00.111;
-	return 0;
-}
+char p = "Hello World!";
+
+char c = 'a';
